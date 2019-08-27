@@ -10,7 +10,6 @@ env:
   - DEMYX_USERNAME=demyx DEMYX_REPOSITORY=mariadb
 
 before_install:
-  - docker pull alpine
   - docker pull webhippie/mariadb
 
 script:
