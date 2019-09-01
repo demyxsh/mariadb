@@ -13,7 +13,7 @@ TITLE | DESCRIPTION
 PORT | 3306
 TIMEZONE | America/Los_Angeles
 
-# Updates
+## Updates
 [![Code Size](https://img.shields.io/github/languages/code-size/demyxco/mariadb?style=flat&color=blue)](https://github.com/demyxco/mariadb)
 [![Repository Size](https://img.shields.io/github/repo-size/demyxco/mariadb?style=flat&color=blue)](https://github.com/demyxco/mariadb)
 [![Watches](https://img.shields.io/github/watchers/demyxco/mariadb?style=flat&color=blue)](https://github.com/demyxco/mariadb)
@@ -23,7 +23,7 @@ TIMEZONE | America/Los_Angeles
 * Auto built weekly on Sundays (America/Los_Angeles)
 * Rolling release updates
 
-# Usage
+## Usage
 ```
 mariadb:
     container_name: mariadb
