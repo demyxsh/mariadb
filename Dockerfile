@@ -9,8 +9,6 @@ LABEL sh.demyx.registry https://hub.docker.com/u/demyx
 ENV TZ=America/Los_Angeles
 
 RUN set ex; \
-	apk add --no-cache --update tzdata dumb-init
+	apk add --no-cache --update tzdata
 
-ENTRYPOINT ["dumb-init"]
-
-CMD ["entrypoint", "/bin/s6-svscan", "/etc/s6"]
+ENTRYPOINT ["/bin/s6-svscan", "/etc/s6"]
