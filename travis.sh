@@ -9,13 +9,9 @@ IFS=$'\n\t'
 DEMYX_ALPINE_VERSION=$(docker exec -t mariadb cat /etc/os-release | grep VERSION_ID | cut -c 12- | sed -e 's/\r//g')
 DEMYX_MARIADB_VERSION=$(docker exec -t mariadb mysql --version | awk -F '[ ]' '{print $6}' | awk -F '[,]' '{print $1}' | sed 's/-MariaDB//g' | sed -e 's/\r//g')
 
-# Replace the README.md
-[[ -f README.md ]] && rm README.md
-cp .readme README.md
-
-# Replace latest with actual versions
-sed -i "s/alpine-latest-informational/alpine-${DEMYX_ALPINE_VERSION}-informational/g" README.md
-sed -i "s/mariadb-latest-informational/mariadb-${DEMYX_MARIADB_VERSION}-informational/g" README.md
+# Replace versions
+sed -i "s|alpine-.*.-informational|alpine-${DEMYX_ALPINE_VERSION}-informational|g" README.md
+sed -i "s|mariadb-.*.-informational|mariadb-${DEMYX_MARIADB_VERSION}-informational|g" README.md
 
 # Push back to GitHub
 git config --global user.email "travis@travis-ci.org"
