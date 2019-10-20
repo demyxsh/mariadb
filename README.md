@@ -2,8 +2,8 @@
 [![Build Status](https://img.shields.io/travis/demyxco/mariadb?style=flat)](https://travis-ci.org/demyxco/mariadb)
 [![Docker Pulls](https://img.shields.io/docker/pulls/demyx/mariadb?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
 [![Architecture](https://img.shields.io/badge/linux-amd64-important?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
-[![Alpine](https://img.shields.io/badge/alpine-3.10_alpha20190408-informational?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
-[![MariaDB](https://img.shields.io/badge/mariadb-10.3.15-informational?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
+[![Alpine](https://img.shields.io/badge/alpine-3.11_alpha20190925-informational?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
+[![MariaDB](https://img.shields.io/badge/mariadb-10.4.8-informational?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
 [![Buy Me A Coffee](https://img.shields.io/badge/buy_me_coffee-$5-informational?style=flat&color=blue)](https://www.buymeacoffee.com/VXqkQK5tb)
 
 MariaDB is a community-developed fork of the MySQL relational database management system intended to remain free under the GNU GPL. Development is led by some of the original developers of MySQL, who forked it due to concerns over its acquisition by Oracle Corporation. Contributors are required to share their copyright with the MariaDB Foundation. Image is built from `webhippie/mariadb:latest`.
