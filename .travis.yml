@@ -16,12 +16,14 @@ before_install:
   - docker pull webhippie/mariadb
 
 script:
-  - docker build --no-cache -t demyx/"$DEMYX_REPOSITORY" .
-  - docker run -d --rm --name mariadb -e MARIADB_ROOT_PASSWORD=demyx demyx/"$DEMYX_REPOSITORY"
+  - docker build --no-cache -t demyx/"$DEMYX_REPOSITORY" tag-latest/.
+  - docker build --no-cache -t demyx/"$DEMYX_REPOSITORY":edge tag-edge/.
+  - docker run -dit --rm --name=mariadb -e MARIADB_ROOT_PASSWORD=demyx demyx/"$DEMYX_REPOSITORY":edge
   - sleep 5
   - docker exec -t mariadb mysql --version
 
 after_success:
   - echo "$DEMYX_PASSWORD" | docker login -u "$DEMYX_USERNAME" --password-stdin
   - docker push demyx/"$DEMYX_REPOSITORY"
+  - docker push demyx/"$DEMYX_REPOSITORY":edge
   - bash travis.sh
