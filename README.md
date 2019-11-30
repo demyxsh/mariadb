@@ -20,7 +20,9 @@ TIMEZONE | America/Los_Angeles
 ## Notice
 `demyx/mariadb:edge` will be merged with `demyx/mariadb:latest` on January 1st, 2020. Edge now runs as demyx user and not as root. There is an upgrade script included because this image will break when using the latest tag. If you want to keep using the current MariaDB setup, then please switch your containers' images to `webhippie/mariadb:latest`.
 
-<b>PLEASE BACKUP FIRST BECAUSE THIS WILL DELETE EVERYTHING INSIDE /var/lib/mysql!</b> To upgrade, you must include all four environment variables
+### PLEASE BACKUP FIRST BECAUSE THIS WILL DELETE EVERYTHING INSIDE /var/lib/mysql!
+
+To upgrade, you must include all four environment variables
 
 ```
 docker run -it --rm --name=mariadb \
