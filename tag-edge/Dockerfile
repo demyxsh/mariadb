@@ -11,7 +11,7 @@ ENV TZ=America/Los_Angeles
 
 # Packages
 RUN set -ex; \
-    apk add --no-cache --update bash dumb-init mariadb mariadb-client tzdata
+    apk add --no-cache --update dumb-init mariadb mariadb-client tzdata
     
 # Create demyx user
 RUN set -ex; \
@@ -20,9 +20,10 @@ RUN set -ex; \
 
 # Set up mariadb
 RUN set -ex; \
-    mkdir -p /var/lib/mysql && chown demyx:demyx /var/lib/mysql; \
-    mkdir -p /var/log/demyx && chown demyx:demyx /var/log/demyx; \
-    mkdir /demyx && chown demyx:demyx /demyx; \
+    install -d -m 0755 -o demyx -g demyx /var/lib/mysql; \
+    install -d -m 0755 -o demyx -g demyx /var/log/demyx; \
+    install -d -m 0755 -o demyx -g demyx /demyx; \
+    \
     ln -sf /demyx/my.cnf /etc/my.cnf
 
 # Copy files

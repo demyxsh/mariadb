@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 # Demyx
 # https://demyx.sh
-set -euom pipefail
+set -euo pipefail
 
 # Generate my.cnf if it doesn't exist
 [[ ! -f /demyx/my.cnf ]] && demyx-config
@@ -12,7 +12,10 @@ if [[ -z "${MARIADB_ROOT_PASSWORD:=}" ]]; then
     exit 1
 fi
 
-if [[ ! -d /var/lib/mysql/"${MARIADB_DATABASE:=}" ]]; then
+if [[ ! -d /var/lib/mysql/"${MARIADB_DATABASE:=''}" ]]; then
+    # Required so fg can be used - https://explainshell.com/explain?cmd=set+-m
+    set -m
+
     # Populate /var/lib/mysql
     mysql_install_db --user=demyx --datadir=/var/lib/mysql --skip-test-db
 
@@ -29,7 +32,7 @@ if [[ ! -d /var/lib/mysql/"${MARIADB_DATABASE:=}" ]]; then
     mysqladmin -u root password "$MARIADB_ROOT_PASSWORD"
 
     # Create custom database if these environment variables exists
-    if [[ -n "$MARIADB_DATABASE" && "$MARIADB_USERNAME" && "$MARIADB_PASSWORD" ]]; then
+    if [[ -n "${MARIADB_DATABASE:=}" && "${MARIADB_USERNAME:=}" && "${MARIADB_PASSWORD:=}" ]]; then
         mysql -u root "-p${MARIADB_ROOT_PASSWORD}" -e "CREATE DATABASE $MARIADB_DATABASE; CREATE USER '$MARIADB_USERNAME' IDENTIFIED BY '$MARIADB_PASSWORD'; GRANT USAGE ON *.* TO '$MARIADB_USERNAME'@'%' IDENTIFIED BY '$MARIADB_PASSWORD'; GRANT ALL privileges ON $MARIADB_DATABASE.* TO '$MARIADB_USERNAME'@'%';"
     else
         echo "[demyx] MARIADB_DATABASE, MARIADB_USERNAME, and/or MARIADB_PASSWORD environment variables not set, continuing without a database..."
