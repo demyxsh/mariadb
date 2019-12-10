@@ -6,17 +6,17 @@
 [![MariaDB](https://img.shields.io/badge/mariadb-10.3.18-informational?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
 [![Buy Me A Coffee](https://img.shields.io/badge/buy_me_coffee-$5-informational?style=flat&color=blue)](https://www.buymeacoffee.com/VXqkQK5tb)
 [![Become a Patron!](https://img.shields.io/badge/become%20a%20patron-$5-informational?style=flat&color=blue)](https://www.patreon.com/bePatron?u=23406156)
-[![Become a Patron!](https://img.shields.io/badge/become%20a%20patron-$5-informational?style=flat&color=blue)](https://www.patreon.com/bePatron?u=23406156)
 
-MariaDB is a community-developed fork of the MySQL relational database management system intended to remain free under the GNU GPL. Development is led by some of the original developers of MySQL, who forked it due to concerns over its acquisition by Oracle Corporation. Contributors are required to share their copyright with the MariaDB Foundation.
+Non-root Docker image running Alpine Linux and MariaDB.
 
-TITLE | DESCRIPTION
+DEMYX | MARIADB
 --- | ---
 TAGS | latest edge
-USER<br />GROUP | demyx (1000)<br />demyx (1000)
-WORKDIR | /var/lib/mysql
-ENTRYPOINT | ["dumb-init", "demyx"]
 PORT | 3306
+USER | demyx
+WORKDIR | /demyx
+CONFIG | /etc/demyx
+ENTRYPOINT | ["dumb-init", "demyx"]
 TIMEZONE | America/Los_Angeles
 
 ## Notice
@@ -64,6 +64,9 @@ services:
       - MARIADB_USERNAME=demyx_user
       - MARIADB_PASSWORD=demyx_password
       - MARIADB_ROOT_PASSWORD=demyx_root_password # mandatory
+      - MARIADB_ROOT=/demyx
+      - MARIADB_CONFIG=/etc/demyx
+      - MARIADB_LOG=/var/log/demyx
       - MARIADB_CHARACTER_SET_SERVER=utf8
       - MARIADB_COLLATION_SERVER=utf8_general_ci
       - MARIADB_DEFAULT_CHARACTER_SET=utf8
@@ -89,7 +92,7 @@ services:
       - MARIADB_WRITE_BUFFER=2M
       - TZ=America/Los_Angeles
     volumes:
-      - demyx_mariadb:/var/lib/mysql
+      - demyx_mariadb:/demyx
 volumes:
   demyx_mariadb:
     name: demyx_mariadb

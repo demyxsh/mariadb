@@ -1,17 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 # Demyx
 # https://demyx.sh
 set -euo pipefail
 
-MARIADB_LOG=mariadb.log
+MARIADB_LOG_FILE=mariadb.log
 # Change log name if MARIADB_DOMAIN is available
-[[ -n "${MARIADB_DOMAIN:=}" ]] && MARIADB_LOG="$MARIADB_DOMAIN".mariadb.log
+[[ -n "${MARIADB_DOMAIN:=}" ]] && MARIADB_LOG_FILE="$MARIADB_DOMAIN".mariadb.log
 
 echo "# Demyx
 # https://demyx.sh
 
 [client-server]
-socket                          = /demyx/mariadb.sock
+socket                          = ${MARIADB_CONFIG}/mariadb.sock
 port                            = 3306
 
 [client]
@@ -20,10 +20,10 @@ default-character-set           = ${MARIADB_DEFAULT_CHARACTER_SET:=utf8}
 [mysqld]
 skip-external-locking
 bind-address                    = 0.0.0.0
-log-error                       = /var/log/demyx/${MARIADB_LOG}
+log-error                       = ${MARIADB_LOG}/${MARIADB_LOG_FILE}
 basedir                         = /usr
-datadir                         = /var/lib/mysql
-pid-file                        = /demyx/mariadb.pid
+datadir                         = ${MARIADB_ROOT}
+pid-file                        = ${MARIADB_CONFIG}/mariadb.pid
 symbolic-links                  = 0
 tmpdir                          = /tmp
 character-set-server            = ${MARIADB_CHARACTER_SET_SERVER:=utf8}
@@ -38,8 +38,8 @@ read_rnd_buffer_size            = ${MARIADB_READ_RND_BUFFER_SIZE=512K}
 myisam_sort_buffer_size         = ${MARIADB_MYISAM_SORT_BUFFER_SIZE:=8M}
 max_connections                 = ${MARIADB_MAX_CONNECTIONS:=100}
 server-id                       = ${MARIADB_SERVER_ID:=1}
-innodb_data_home_dir            = /var/lib/mysql
-innodb_log_group_home_dir       = /var/lib/mysql
+innodb_data_home_dir            = ${MARIADB_ROOT}
+innodb_log_group_home_dir       = ${MARIADB_ROOT}
 innodb_data_file_path           = ${MARIADB_INNODB_DATA_FILE_PATH:=ibdata1:10M:autoextend}
 innodb_buffer_pool_size         = ${MARIADB_INNODB_BUFFER_POOL_SIZE:=16M}
 innodb_log_file_size            = ${MARIADB_INNODB_LOG_FILE_SIZE:=5M}
@@ -64,4 +64,4 @@ read_buffer                     = ${MARIADB_READ_BUFFER:=2M}
 write_buffer                    = ${MARIADB_WRITE_BUFFER:=2M}
 
 [mysqlhotcopy]
-interactive-timeout" > /demyx/my.cnf
+interactive-timeout" > "$MARIADB_CONFIG"/my.cnf

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Demyx
 # https://demyx.sh
 set -euom pipefail
@@ -31,13 +31,10 @@ do
 done
 
 # Export database
-mysqldump -u root "$MARIADB_DATABASE" > /demyx/"$MARIADB_DATABASE".sql
+mysqldump -u root "$MARIADB_DATABASE" > "$MARIADB_ROOT"/"$MARIADB_DATABASE".sql
 
-# Delete all contents in /var/lib/mysql
-rm -rf /var/lib/mysql/*
-
-# Rerun mysql_install_db
-mysql_install_db --user=demyx --datadir=/var/lib/mysql --skip-test-db
+# Initialize database
+mysql_install_db --user=demyx --datadir="$MARIADB_ROOT" --skip-test-db
 
 # Kill mysql with the dangerous flag and rerun mysql
 pkill mysql
@@ -57,4 +54,7 @@ mysqladmin -u root password "$MARIADB_ROOT_PASSWORD"
 mysql -u root -p"$MARIADB_ROOT_PASSWORD" -e "CREATE DATABASE $MARIADB_DATABASE; CREATE USER '$MARIADB_USERNAME' IDENTIFIED BY '$MARIADB_PASSWORD'; GRANT USAGE ON *.* TO '$MARIADB_USERNAME'@'%' IDENTIFIED BY '$MARIADB_PASSWORD'; GRANT ALL privileges ON $MARIADB_DATABASE.* TO '$MARIADB_USERNAME'@'%';"
 
 # Import database
-mysql -u root -p"$MARIADB_ROOT_PASSWORD" "$MARIADB_DATABASE" < /demyx/"$MARIADB_DATABASE".sql
+mysql -u root -p"$MARIADB_ROOT_PASSWORD" "$MARIADB_DATABASE" < "$MARIADB_ROOT"/"$MARIADB_DATABASE".sql
+
+# Remove database if exit code is 0
+[[ "$?" = 0 ]] && rm -f "$MARIADB_ROOT"/"$MARIADB_DATABASE".sql

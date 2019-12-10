@@ -1,10 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 # Demyx
 # https://demyx.sh
 set -euo pipefail
 
+# Compatibility with old paths
+[[ -d /var/lib/mysql/"${MARIADB_DATABASE:=''}" ]] && MARIADB_ROOT=/var/lib/mysql
+
 # Generate my.cnf if it doesn't exist
-[[ ! -f /demyx/my.cnf ]] && demyx-config
+[[ ! -f "$MARIADB_CONFIG"/my.cnf ]] && demyx-config
 
 # Exit container if root password isn't set
 if [[ -z "${MARIADB_ROOT_PASSWORD:=}" ]]; then 
@@ -12,12 +15,12 @@ if [[ -z "${MARIADB_ROOT_PASSWORD:=}" ]]; then
     exit 1
 fi
 
-if [[ ! -d /var/lib/mysql/"${MARIADB_DATABASE:=''}" ]]; then
+if [[ ! -d "$MARIADB_ROOT"/"${MARIADB_DATABASE:=''}" ]]; then
     # Required so fg can be used - https://explainshell.com/explain?cmd=set+-m
     set -m
 
     # Populate /var/lib/mysql
-    mysql_install_db --user=demyx --datadir=/var/lib/mysql --skip-test-db
+    mysql_install_db --user=demyx --datadir="$MARIADB_ROOT" --skip-test-db
 
     # Run in the background first
     mysqld_safe &

@@ -6,12 +6,15 @@ LABEL sh.demyx.url https://demyx.sh
 LABEL sh.demyx.github https://github.com/demyxco
 LABEL sh.demyx.registry https://hub.docker.com/u/demyx
 
-# Set default environment variable
-ENV TZ=America/Los_Angeles
+# Set default variables
+ENV MARIADB_ROOT=/demyx
+ENV MARIADB_CONFIG=/etc/demyx
+ENV MARIADB_LOG=/var/log/demyx
+ENV TZ America/Los_Angeles
 
 # Packages
 RUN set -ex; \
-    apk add --no-cache --update dumb-init mariadb mariadb-client tzdata
+    apk add --no-cache --update bash dumb-init mariadb mariadb-client tzdata
     
 # Create demyx user
 RUN set -ex; \
@@ -20,11 +23,11 @@ RUN set -ex; \
 
 # Set up mariadb
 RUN set -ex; \
-    install -d -m 0755 -o demyx -g demyx /var/lib/mysql; \
-    install -d -m 0755 -o demyx -g demyx /var/log/demyx; \
-    install -d -m 0755 -o demyx -g demyx /demyx; \
+    install -d -m 0755 -o demyx -g demyx "$MARIADB_ROOT"; \
+    install -d -m 0755 -o demyx -g demyx "$MARIADB_CONFIG"; \
+    install -d -m 0755 -o demyx -g demyx "$MARIADB_LOG"; \
     \
-    ln -sf /demyx/my.cnf /etc/my.cnf
+    ln -sf "$MARIADB_CONFIG"/my.cnf /etc/my.cnf
 
 # Copy files
 COPY demyx.sh /usr/local/bin/demyx
@@ -37,7 +40,7 @@ RUN set -ex; \
     chmod +x /usr/local/bin/demyx-config; \
     chmod +x /usr/local/bin/demyx-upgrade
 
-WORKDIR /var/lib/mysql
+WORKDIR "$MARIADB_ROOT"
 
 EXPOSE 3306
 
