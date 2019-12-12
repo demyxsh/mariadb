@@ -12,22 +12,18 @@ ENV MARIADB_CONFIG=/etc/demyx
 ENV MARIADB_LOG=/var/log/demyx
 ENV TZ America/Los_Angeles
 
+# Configure Demyx
+RUN set -ex; \
+    addgroup -g 1000 -S demyx; \
+    adduser -u 1000 -D -S -G demyx demyx; \
+    \
+    install -d -m 0755 -o demyx -g demyx "$MARIADB_ROOT"; \
+    install -d -m 0755 -o demyx -g demyx "$MARIADB_CONFIG"; \
+    install -d -m 0755 -o demyx -g demyx "$MARIADB_LOG"
+
 # Packages
 RUN set -ex; \
     apk add --no-cache --update bash dumb-init mariadb mariadb-client tzdata
-    
-# Create demyx user
-RUN set -ex; \
-    addgroup -g 1000 -S demyx; \
-    adduser -u 1000 -D -S -G demyx demyx
-
-# Set up mariadb
-RUN set -ex; \
-    install -d -m 0755 -o demyx -g demyx "$MARIADB_ROOT"; \
-    install -d -m 0755 -o demyx -g demyx "$MARIADB_CONFIG"; \
-    install -d -m 0755 -o demyx -g demyx "$MARIADB_LOG"; \
-    \
-    ln -sf "$MARIADB_CONFIG"/my.cnf /etc/my.cnf
 
 # Copy files
 COPY demyx.sh /usr/local/bin/demyx
@@ -38,7 +34,9 @@ COPY upgrade.sh /usr/local/bin/demyx-upgrade
 RUN set -ex; \
     chmod +x /usr/local/bin/demyx; \
     chmod +x /usr/local/bin/demyx-config; \
-    chmod +x /usr/local/bin/demyx-upgrade
+    chmod +x /usr/local/bin/demyx-upgrade; \
+    \
+    ln -sf "$MARIADB_CONFIG"/my.cnf /etc/my.cnf
 
 WORKDIR "$MARIADB_ROOT"
 
