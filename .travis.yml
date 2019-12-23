@@ -18,9 +18,9 @@ before_install:
 script:
   - docker build --no-cache -t demyx/"$DEMYX_REPOSITORY" tag-latest/.
   - docker build --no-cache -t demyx/"$DEMYX_REPOSITORY":edge tag-edge/.
-  - docker run -dit --rm --name=mariadb -e MARIADB_ROOT_PASSWORD=demyx demyx/"$DEMYX_REPOSITORY":edge
+  - docker run -dit --rm --name="$DEMYX_REPOSITORY" -e MARIADB_ROOT_PASSWORD=demyx demyx/"$DEMYX_REPOSITORY":edge
   - sleep 5
-  - docker exec -t mariadb mysql --version
+  - docker exec -t "$DEMYX_REPOSITORY" mysql --version
 
 after_success:
   - echo "$DEMYX_PASSWORD" | docker login -u "$DEMYX_USERNAME" --password-stdin
