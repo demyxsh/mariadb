@@ -20,7 +20,7 @@ if [[ ! -d "$MARIADB_ROOT"/"${MARIADB_DATABASE:=''}" ]]; then
     set -m
 
     # Populate /var/lib/mysql
-    mysql_install_db --user=demyx --datadir="$MARIADB_ROOT" --skip-test-db
+    mysql_install_db --datadir="$MARIADB_ROOT" --skip-test-db
 
     # Run in the background first
     mysqld_safe &
