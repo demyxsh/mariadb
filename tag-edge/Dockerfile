@@ -23,17 +23,34 @@ RUN set -ex; \
 
 # Packages
 RUN set -ex; \
-    apk add --no-cache --update bash dumb-init mariadb mariadb-client tzdata
+    apk add --no-cache --update bash dumb-init mariadb mariadb-client sudo tzdata
 
 # Copy files
-COPY demyx.sh /usr/local/bin/demyx
-COPY config.sh /usr/local/bin/demyx-config
-COPY upgrade.sh /usr/local/bin/demyx-upgrade
+COPY --chown=demyx:demyx demyx "$MARIADB_CONFIG"
+
+# Configure sudo
+RUN set -ex; \
+    echo "demyx ALL=(ALL) NOPASSWD:/etc/demyx/admin.sh" > /etc/sudoers.d/demyx; \
+    \
+    echo 'Defaults env_keep +="MARIADB_ROOT"' >> /etc/sudoers.d/demyx; \
+    echo 'Defaults env_keep +="MARIADB_ROOT_PASSWORD"' >> /etc/sudoers.d/demyx; \
+    echo 'Defaults env_keep +="MARIADB_DATABASE"' >> /etc/sudoers.d/demyx; \
+    echo 'Defaults env_keep +="MARIADB_USERNAME"' >> /etc/sudoers.d/demyx; \
+    echo 'Defaults env_keep +="MARIADB_PASSWORD"' >> /etc/sudoers.d/demyx; \
+    \
+    echo '#!/bin/bash' > /usr/local/bin/demyx-admin; \
+    echo 'sudo /etc/demyx/admin.sh' >> /usr/local/bin/demyx-admin; \
+    chmod +x "$MARIADB_CONFIG"/admin.sh; \
+    chmod +x /usr/local/bin/demyx-admin
 
 # Finalize
 RUN set -ex; \
-    chmod +x /usr/local/bin/demyx; \
+    mv "$MARIADB_CONFIG"/config.sh /usr/local/bin/demyx-config; \
+    mv "$MARIADB_CONFIG"/entrypoint.sh /usr/local/bin/demyx; \
+    mv "$MARIADB_CONFIG"/upgrade.sh /usr/local/bin/demyx-upgrade; \
+    \
     chmod +x /usr/local/bin/demyx-config; \
+    chmod +x /usr/local/bin/demyx; \
     chmod +x /usr/local/bin/demyx-upgrade; \
     \
     ln -sf "$MARIADB_CONFIG"/my.cnf /etc/my.cnf
