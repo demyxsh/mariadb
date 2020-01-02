@@ -16,7 +16,7 @@ before_install:
   - docker pull webhippie/mariadb
 
 script:
-  - docker build --no-cache -t demyx/"$DEMYX_REPOSITORY" tag-latest
+  - docker build --no-cache -t demyx/"$DEMYX_REPOSITORY" .
   - docker run -dit --rm --name="$DEMYX_REPOSITORY" -e MARIADB_ROOT_PASSWORD=demyx demyx/"$DEMYX_REPOSITORY"
   - sleep 5
   - docker exec -t "$DEMYX_REPOSITORY" mysql --version
