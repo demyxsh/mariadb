@@ -19,26 +19,6 @@ CONFIG | /etc/demyx
 ENTRYPOINT | ["dumb-init", "demyx"]
 TIMEZONE | America/Los_Angeles
 
-## Notice
-`demyx/mariadb:edge` will be merged with `demyx/mariadb:latest` on January 1st, 2020. Edge now runs as demyx user and not as root. There is an upgrade script included because this image will break when using the latest tag. If you want to keep using the current MariaDB setup, then please switch your containers' images to `webhippie/mariadb:latest`.
-
-### PLEASE BACKUP FIRST BECAUSE THIS WILL DELETE EVERYTHING INSIDE /var/lib/mysql!
-
-To upgrade, you must include all four environment variables
-
-```
-docker run -it --rm --name=mariadb \
--v mariadb:/var/lib/mysql \
--e MARIADB_ROOT_PASSWORD=your-root-password \
--e MARIADB_DATABASE=your-database \
--e MARIADB_USERNAME=your-username \
--e MARIADB_PASSWORD=your-password \
---entrypoint=demyx-upgrade \
-demyx/mariadb:edge
-```
-
-After that, restart the container using the new image: `demyx/mariadb:edge`. This notice will be removed once the merge is complete.
-
 ## Usage
 ```
 version: "3.7"
@@ -46,7 +26,7 @@ version: "3.7"
 services:
   mariadb:
     container_name: demyx_mariadb
-    image: demyx/mariadb:edge
+    image: demyx/mariadb
     restart: unless-stopped
     environment:
       - MARIADB_DATABASE=demyx_db

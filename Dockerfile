@@ -26,7 +26,7 @@ RUN set -ex; \
     apk add --no-cache --update bash dumb-init mariadb mariadb-client sudo tzdata
 
 # Copy files
-COPY --chown=demyx:demyx demyx "$MARIADB_CONFIG"
+COPY --chown=demyx:demyx src "$MARIADB_CONFIG"
 
 # Configure sudo
 RUN set -ex; \
