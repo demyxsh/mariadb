@@ -36,7 +36,7 @@ net_buffer_length               = ${MARIADB_NET_BUFFER_SIZE:=8K}
 read_buffer_size                = ${MARIADB_READ_BUFFER_SIZE:=256K}
 read_rnd_buffer_size            = ${MARIADB_READ_RND_BUFFER_SIZE=512K}
 myisam_sort_buffer_size         = ${MARIADB_MYISAM_SORT_BUFFER_SIZE:=8M}
-max_connections                 = ${MARIADB_MAX_CONNECTIONS:=100}
+max_connections                 = ${MARIADB_MAX_CONNECTIONS:=1000}
 server-id                       = ${MARIADB_SERVER_ID:=1}
 innodb_data_home_dir            = ${MARIADB_ROOT}
 innodb_log_group_home_dir       = ${MARIADB_ROOT}
