@@ -69,4 +69,4 @@ EXPOSE 3306
 
 USER demyx
 
-ENTRYPOINT ["dumb-init", "demyx"]
+ENTRYPOINT ["demyx-entrypoint"]
