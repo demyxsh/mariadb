@@ -45,15 +45,23 @@ RUN set -ex; \
 
 # Finalize
 RUN set -ex; \
+    # demyx-config
+    chmod +x "$MARIADB_CONFIG"/config.sh; \
     mv "$MARIADB_CONFIG"/config.sh /usr/local/bin/demyx-config; \
-    mv "$MARIADB_CONFIG"/entrypoint.sh /usr/local/bin/demyx; \
+    \
+    # demyx-upgrade
+    chmod +x "$MARIADB_CONFIG"/upgrade.sh; \
     mv "$MARIADB_CONFIG"/upgrade.sh /usr/local/bin/demyx-upgrade; \
     \
-    chmod +x /usr/local/bin/demyx-config; \
-    chmod +x /usr/local/bin/demyx; \
-    chmod +x /usr/local/bin/demyx-upgrade; \
+    # demyx-entrypoint
+    chmod +x "$MARIADB_CONFIG"/entrypoint.sh; \
+    mv "$MARIADB_CONFIG"/entrypoint.sh /usr/local/bin/demyx-entrypoint; \
     \
-    ln -sf "$MARIADB_CONFIG"/my.cnf /etc/my.cnf
+    # Symlink config
+    ln -sf "$MARIADB_CONFIG"/my.cnf /etc/my.cnf; \
+    \
+    # Reset permissions
+    chown -R root:root /usr/local/bin
 
 WORKDIR "$MARIADB_ROOT"
 
