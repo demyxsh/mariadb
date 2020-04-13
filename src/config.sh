@@ -23,7 +23,7 @@ bind-address                    = 0.0.0.0
 log-error                       = ${MARIADB_LOG}/${MARIADB_LOG_FILE}
 basedir                         = /usr
 datadir                         = ${MARIADB_ROOT}
-pid-file                        = ${MARIADB_CONFIG}/mariadb.pid
+pid-file                         = ${MARIADB_CONFIG}/mariadb.pid
 symbolic-links                  = 0
 tmpdir                          = /tmp
 character-set-server            = ${MARIADB_CHARACTER_SET_SERVER:=utf8}
@@ -40,14 +40,14 @@ max_connections                 = ${MARIADB_MAX_CONNECTIONS:=1000}
 server-id                       = ${MARIADB_SERVER_ID:=1}
 innodb_data_home_dir            = ${MARIADB_ROOT}
 innodb_log_group_home_dir       = ${MARIADB_ROOT}
-innodb_data_file_path           = ${MARIADB_INNODB_DATA_FILE_PATH:=ibdata1:10M:autoextend}
+innodb_data_file_path            = ${MARIADB_INNODB_DATA_FILE_PATH:=ibdata1:10M:autoextend}
 innodb_buffer_pool_size         = ${MARIADB_INNODB_BUFFER_POOL_SIZE:=16M}
-innodb_log_file_size            = ${MARIADB_INNODB_LOG_FILE_SIZE:=5M}
+innodb_log_file_size             = ${MARIADB_INNODB_LOG_FILE_SIZE:=5M}
 innodb_log_buffer_size          = ${MARIADB_INNODB_LOG_BUFFER_SIZE:=8M}
-innodb_flush_log_at_trx_commit  = ${MARIADB_INNODB_FLUSH_LOG_AT_TRX_COMMIT:=1}
-innodb_lock_wait_timeout        = ${MARIADB_INNODB_LOCK_WAIT_TIMEOUT:=50}
+innodb_flush_log_at_trx_commit   = ${MARIADB_INNODB_FLUSH_LOG_AT_TRX_COMMIT:=1}
+innodb_lock_wait_timeout        = ${MARIADB_INNODB_LOCK_WAIT_TIMEOUT:=100}
 innodb_use_native_aio           = ${MARIADB_INNODB_USE_NATIVE_AIO:=1}
-innodb_file_per_table           = ${MARIADB_INNODB_FILE_PER_TABLE:=1}
+innodb_file_per_table            = ${MARIADB_INNODB_FILE_PER_TABLE:=1}
 
 [mysqldump]
 quick
