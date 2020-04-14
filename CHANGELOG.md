@@ -20,4 +20,5 @@
     - Output versions to a file
     - Commit version file first before committing the rest
     - Make mariadb container use repository name
+    - Misc update to version commands
 ### Removed
