@@ -21,4 +21,5 @@
     - Commit version file first before committing the rest
     - Make mariadb container use repository name
     - Misc update to version commands
+    - Update WORDPRESS_DB_HOST to repository name
 ### Removed
