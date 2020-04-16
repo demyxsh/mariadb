@@ -6,15 +6,15 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # Get versions
-DEMYX_ALPINE_VERSION="$(docker exec "$DEMYX_REPOSITORY" cat /etc/os-release | grep VERSION_ID | cut -c 12- | sed -e 's/\r//g')"
+DEMYX_MARIADB_ALPINE_VERSION="$(docker exec "$DEMYX_REPOSITORY" cat /etc/os-release | grep VERSION_ID | cut -c 12- | sed -e 's/\r//g')"
 DEMYX_MARIADB_VERSION="$(docker exec "$DEMYX_REPOSITORY" mysql --version | awk -F '[ ]' '{print $6}' | awk -F '[,]' '{print $1}' | sed 's/-MariaDB//g' | sed -e 's/\r//g')"
 
 # Replace versions
-sed -i "s|alpine-.*.-informational|alpine-${DEMYX_ALPINE_VERSION}-informational|g" README.md
+sed -i "s|alpine-.*.-informational|alpine-${DEMYX_MARIADB_ALPINE_VERSION}-informational|g" README.md
 sed -i "s|${DEMYX_REPOSITORY}-.*.-informational|${DEMYX_REPOSITORY}-${DEMYX_MARIADB_VERSION}-informational|g" README.md
 
 # Echo versions to file
-echo "DEMYX_ALPINE_VERSION=$DEMYX_ALPINE_VERSION
+echo "DEMYX_MARIADB_ALPINE_VERSION=$DEMYX_MARIADB_ALPINE_VERSION
 DEMYX_MARIADB_VERSION=$DEMYX_MARIADB_VERSION" > VERSION
 
 # Push back to GitHub
@@ -23,7 +23,7 @@ git config --global user.name "Travis CI"
 git remote set-url origin https://${DEMYX_GITHUB_TOKEN}@github.com/demyxco/"$DEMYX_REPOSITORY".git
 # Commit VERSION first
 git add VERSION
-git commit -m "ALPINE $DEMYX_ALPINE_VERSION, MARIADB $DEMYX_MARIADB_VERSION"
+git commit -m "ALPINE $DEMYX_MARIADB_ALPINE_VERSION, MARIADB $DEMYX_MARIADB_VERSION"
 git push origin HEAD:master
 # Commit the rest
 git add .
