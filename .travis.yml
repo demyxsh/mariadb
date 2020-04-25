@@ -27,6 +27,7 @@ script:
   - sleep 5
   - docker run --network=demyx --volumes-from=demyx_wp --workdir=/demyx demyx/wordpress:cli core install --url=http://localhost --title=demyx --admin_user=demyx --admin_password=demyx --admin_email=info@domain.tld --skip-email
   - docker run -dit --name=demyx_nx --network=demyx -v demyx_wp:/demyx -e WORDPRESS=true -e WORDPRESS_CONTAINER=demyx_wp -e WORDPRESS_CONTAINER_PORT=9000 -e NGINX_DOMAIN=localhost demyx/nginx
+  - sleep 5
   - docker exec demyx_nx sh -c "wget -qO- http://localhost | grep 'Hello world'"
 
 after_success:
