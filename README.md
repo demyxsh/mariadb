@@ -16,55 +16,54 @@ PORT | 3306
 USER | demyx
 WORKDIR | /demyx
 CONFIG | /etc/demyx
-ENTRYPOINT | ["demyx-entrypoint"]
+ENTRYPOINT | /usr/local/bin/demyx-entrypoint
 TIMEZONE | America/Los_Angeles
 
 ## Usage
 ```
-version: "3.7"
-
 services:
   mariadb:
-    container_name: demyx_mariadb
+    container_name: demyx_db
+    environment:
+      - DEMYX=/demyx
+      - DEMYX_CHARACTER_SET_SERVER=utf8
+      - DEMYX_COLLATION_SERVER=utf8_general_ci
+      - DEMYX_CONFIG=/etc/demyx
+      - DEMYX_DATABASE=demyx
+      - DEMYX_DEFAULT_CHARACTER_SET=utf8
+      - DEMYX_INNODB_BUFFER_POOL_SIZE=16M
+      - DEMYX_INNODB_DATA_FILE_PATH=ibdata1:10M:autoextend
+      - DEMYX_INNODB_FILE_PER_TABLE=1
+      - DEMYX_INNODB_FLUSH_LOG_AT_TRX_COMMIT=1
+      - DEMYX_INNODB_LOCK_WAIT_TIMEOUT=50
+      - DEMYX_INNODB_LOG_BUFFER_SIZE=8M
+      - DEMYX_INNODB_LOG_FILE_SIZE=5M
+      - DEMYX_INNODB_USE_NATIVE_AIO=1
+      - DEMYX_KEY_BUFFER_SIZE=20M
+      - DEMYX_LOG=/var/log/demyx
+      - DEMYX_MAX_ALLOWED_PACKET=16M
+      - DEMYX_MAX_CONNECTIONS=1000
+      - DEMYX_MYISAM_SORT_BUFFER_SIZE=8M
+      - DEMYX_NET_BUFFER_SIZE=8K
+      - DEMYX_PASSWORD=demyx
+      - DEMYX_READ_BUFFER=2M
+      - DEMYX_READ_BUFFER_SIZE=256K
+      - DEMYX_READ_RND_BUFFER_SIZE=512K
+      - DEMYX_ROOT_PASSWORD=demyx_root # mandatory
+      - DEMYX_SERVER_ID=1
+      - DEMYX_SORT_BUFFER_SIZE=20M
+      - DEMYX_TABLE_OPEN_CACHE=64
+      - DEMYX_USERNAME=demyx
+      - DEMYX_WRITE_BUFFER=2M
+      - TZ=America/Los_Angeles
     image: demyx/mariadb
     restart: unless-stopped
-    environment:
-      - MARIADB_DATABASE=demyx_db
-      - MARIADB_USERNAME=demyx_user
-      - MARIADB_PASSWORD=demyx_password
-      - MARIADB_ROOT_PASSWORD=demyx_root_password # mandatory
-      - MARIADB_ROOT=/demyx
-      - MARIADB_CONFIG=/etc/demyx
-      - MARIADB_LOG=/var/log/demyx
-      - MARIADB_CHARACTER_SET_SERVER=utf8
-      - MARIADB_COLLATION_SERVER=utf8_general_ci
-      - MARIADB_DEFAULT_CHARACTER_SET=utf8
-      - MARIADB_INNODB_BUFFER_POOL_SIZE=16M
-      - MARIADB_INNODB_DATA_FILE_PATH=ibdata1:10M:autoextend
-      - MARIADB_INNODB_FLUSH_LOG_AT_TRX_COMMIT=1
-      - MARIADB_INNODB_LOCK_WAIT_TIMEOUT=50
-      - MARIADB_INNODB_LOG_BUFFER_SIZE=8M
-      - MARIADB_INNODB_LOG_FILE_SIZE=5M
-      - MARIADB_INNODB_USE_NATIVE_AIO=1
-      - MARIADB_INNODB_FILE_PER_TABLE=1
-      - MARIADB_KEY_BUFFER_SIZE=20M
-      - MARIADB_MAX_ALLOWED_PACKET=16M
-      - MARIADB_MAX_CONNECTIONS=1000
-      - MARIADB_MYISAM_SORT_BUFFER_SIZE=8M
-      - MARIADB_NET_BUFFER_SIZE=8K
-      - MARIADB_READ_BUFFER=2M
-      - MARIADB_READ_BUFFER_SIZE=256K
-      - MARIADB_READ_RND_BUFFER_SIZE=512K
-      - MARIADB_SERVER_ID=1
-      - MARIADB_SORT_BUFFER_SIZE=20M
-      - MARIADB_TABLE_OPEN_CACHE=64
-      - MARIADB_WRITE_BUFFER=2M
-      - TZ=America/Los_Angeles
     volumes:
-      - demyx_mariadb:/demyx
+      - demyx_db:/demyx
+version: "2.4"
 volumes:
-  demyx_mariadb:
-    name: demyx_mariadb
+  demyx_db:
+    name: demyx_db
 ```
 
 ## Updates & Support

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2020-11-22
+### Changed
+- Alphabetized
+- Rename variables and support old ones
+- Use full paths to binaries/scripts
+- Use -E flag for sudo to keep environment variables
+
 ## 2020-04-13
 ### Added
 - sudo
