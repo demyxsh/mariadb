@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2020-11-24
+### Changed
+- Add DEMYX_DOMAIN as a variable
+
 ## 2020-11-22
 ### Changed
 - Alphabetized

@@ -13,6 +13,7 @@ ENV DEMYX_COLLATION_SERVER                  utf8_general_ci
 ENV DEMYX_CONFIG                            /etc/demyx
 ENV DEMYX_DATABASE                          demyx
 ENV DEMYX_DEFAULT_CHARACTER_SET             utf8
+ENV DEMYX_DOMAIN                            localhost
 ENV DEMYX_INNODB_BUFFER_POOL_SIZE           16M
 ENV DEMYX_INNODB_DATA_FILE_PATH             ibdata1:10M:autoextend
 ENV DEMYX_INNODB_FILE_PER_TABLE             1
