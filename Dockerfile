@@ -96,4 +96,4 @@ EXPOSE 3306
 
 USER demyx
 
-ENTRYPOINT ["demyx-entrypoint"]
+ENTRYPOINT ["/usr/local/bin/demyx-entrypoint"]

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2020-12-04
+### Changed
+- Use full path for entrypoint
+
 ## 2020-11-24
 ### Changed
 - Add DEMYX_DOMAIN as a variable
