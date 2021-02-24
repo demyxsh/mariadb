@@ -46,7 +46,7 @@ ENV MARIADB_LOG                             "$DEMYX_LOG"
 
 # Packages
 RUN set -ex; \
-    /sbin/apk --update --no-cache add bash mariadb mariadb-client sudo tzdata
+    apk --update --no-cache add bash mariadb mariadb-client sudo tzdata
 
 # Configure Demyx
 RUN set -ex; \
