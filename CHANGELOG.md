@@ -1,5 +1,33 @@
 # CHANGELOG
 
+## 2021-02-23
+- Added
+    - `bin/demyx-admin`
+    - `bin/demyx-config`
+    - `bin/demyx-entrypoint`
+    - `bin/demyx-upgrade`
+- Changed
+    - Renamed src to bin.
+    - Renamed admin.sh to demyx-admin.
+    - Renamed config.sh to demyx-config.
+    - Renamed entrypoint.sh to demyx-entrypoint.
+    - Renamed upgrade.sh to demyx-upgrade.
+    - `bin/demyx-admin`
+        - Remove full paths to binaries.
+    - `bin/demyx-config`
+        - Remove full paths to binaries.
+    - `bin/demyx-entrypoint`
+        - Remove full paths to binaries.
+        - Add sudo to demyx-admin.
+    - `bin/demyx-upgrade`
+        - Remove full paths to binaries.
+    - `Dockerfile`
+        - Remove full paths to binaries.
+        - Rearrange RUN commands.
+        - Update bash PS1.
+        - Update COPY directory.
+- Removed
+
 ## 2020-12-04
 ### Changed
 - Use full path for entrypoint
