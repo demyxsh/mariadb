@@ -44,51 +44,39 @@ ENV MARIADB_ROOT                            "$DEMYX"
 ENV MARIADB_CONFIG                          "$DEMYX_CONFIG"
 ENV MARIADB_LOG                             "$DEMYX_LOG"
 
-# Configure Demyx
-RUN set -ex; \
-    /usr/sbin/addgroup -g 1000 -S demyx; \
-    /usr/sbin/adduser -u 1000 -D -S -G demyx demyx; \
-    \
-    /usr/bin/install -d -m 0755 -o demyx -g demyx "$DEMYX"; \
-    /usr/bin/install -d -m 0755 -o demyx -g demyx "$DEMYX_CONFIG"; \
-    /usr/bin/install -d -m 0755 -o demyx -g demyx "$DEMYX_LOG"
-
 # Packages
 RUN set -ex; \
     /sbin/apk --update --no-cache add bash mariadb mariadb-client sudo tzdata
 
+# Configure Demyx
+RUN set -ex; \
+    # Create demyx user
+    addgroup -g 1000 -S demyx; \
+    adduser -u 1000 -D -S -G demyx demyx; \
+    \
+    # Create demyx directories
+    install -d -m 0755 -o demyx -g demyx "$DEMYX"; \
+    install -d -m 0755 -o demyx -g demyx "$DEMYX_CONFIG"; \
+    install -d -m 0755 -o demyx -g demyx "$DEMYX_LOG"; \
+    \
+    # Update .bashrc
+    echo 'PS1="$(whoami)@\h:\w \$ "' > /home/demyx/.bashrc; \
+    echo 'PS1="$(whoami)@\h:\w \$ "' > /root/.bashrc
+
 # Configure sudo
 RUN set -ex; \
-    /bin/echo "demyx ALL=(ALL) NOPASSWD:SETENV: /etc/demyx/admin.sh" > /etc/sudoers.d/demyx
+    echo "demyx ALL=(ALL) NOPASSWD:SETENV: /usr/local/bin/demyx-admin" > /etc/sudoers.d/demyx
 
 # Imports
-COPY --chown=demyx:demyx src "$DEMYX_CONFIG"
+COPY --chown=root:root bin /usr/local/bin
 
 # Finalize
 RUN set -ex; \
-    # demyx-admin
-    /bin/echo '#!/bin/bash' > /usr/local/bin/demyx-admin; \
-    /bin/echo '/usr/bin/sudo -E /etc/demyx/admin.sh' >> /usr/local/bin/demyx-admin; \
-    /bin/chmod +x "$DEMYX_CONFIG"/admin.sh; \
-    /bin/chmod +x /usr/local/bin/demyx-admin; \
-    \
-    # demyx-config
-    /bin/cp "$DEMYX_CONFIG"/config.sh /usr/local/bin/demyx-config; \
-    /bin/chmod +x /usr/local/bin/demyx-config; \
-    \
-    # demyx-upgrade
-    /bin/cp "$DEMYX_CONFIG"/upgrade.sh /usr/local/bin/demyx-upgrade; \
-    /bin/chmod +x /usr/local/bin/demyx-upgrade; \
-    \
-    # demyx-entrypoint
-    /bin/cp "$DEMYX_CONFIG"/entrypoint.sh /usr/local/bin/demyx-entrypoint; \
-    /bin/chmod +x /usr/local/bin/demyx-entrypoint; \
-    \
     # Symlink config
-    /bin/ln -sf "$DEMYX_CONFIG"/my.cnf /etc/my.cnf; \
+    ln -sf "$DEMYX_CONFIG"/my.cnf /etc/my.cnf; \
     \
-    # Reset permissions
-    /bin/chown -R root:root /usr/local/bin
+    # Set ownership
+    chown -R root:root /usr/local/bin
 
 WORKDIR "$DEMYX"
 
@@ -96,4 +84,4 @@ EXPOSE 3306
 
 USER demyx
 
-ENTRYPOINT ["/usr/local/bin/demyx-entrypoint"]
+ENTRYPOINT ["demyx-entrypoint"]
