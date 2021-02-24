@@ -13,11 +13,11 @@ set -euo pipefail
 [[ -d /var/lib/mysql/"${DEMYX_DATABASE:=''}" ]] && DEMYX=/var/lib/mysql
 
 # Generate my.cnf if it doesn't exist
-[[ ! -f "$DEMYX_CONFIG"/my.cnf ]] && /usr/local/bin/demyx-config
+[[ ! -f "$DEMYX_CONFIG"/my.cnf ]] && demyx-config
 
 # Exit container if root password isn't set
 if [[ -z "${DEMYX_ROOT_PASSWORD:-}" ]]; then 
-    /bin/echo "[demyx] DEMYX_ROOT_PASSWORD is not set! Exiting..."
+    echo "[demyx] DEMYX_ROOT_PASSWORD is not set! Exiting..."
     exit 1
 fi
 
@@ -26,23 +26,23 @@ if [[ ! -d "$DEMYX"/"${DEMYX_DATABASE:=''}" ]]; then
     set -m
 
     # Populate /var/lib/mysql
-    /usr/bin/mysql_install_db --datadir="$DEMYX" --skip-test-db
+    mysql_install_db --datadir="$DEMYX" --skip-test-db
 
     # Run in the background first
-    /usr/bin/mysqld_safe &
+    mysqld_safe &
 
     # Sudo wrapper for mysqladmin
-    /usr/local/bin/demyx-admin
+    sudo -E demyx-admin
 
     # Create custom database if these environment variables exists
     if [[ -n "${DEMYX_DATABASE:=}" && "${DEMYX_USERNAME:=}" && "${DEMYX_PASSWORD:=}" ]]; then
-        /usr/bin/mysql -u root "-p${DEMYX_ROOT_PASSWORD}" -e "CREATE DATABASE $DEMYX_DATABASE; CREATE USER '$DEMYX_USERNAME' IDENTIFIED BY '$DEMYX_PASSWORD'; GRANT USAGE ON *.* TO '$DEMYX_USERNAME'@'%' IDENTIFIED BY '$DEMYX_PASSWORD'; GRANT ALL privileges ON $DEMYX_DATABASE.* TO '$DEMYX_USERNAME'@'%';"
+        mysql -u root "-p${DEMYX_ROOT_PASSWORD}" -e "CREATE DATABASE $DEMYX_DATABASE; CREATE USER '$DEMYX_USERNAME' IDENTIFIED BY '$DEMYX_PASSWORD'; GRANT USAGE ON *.* TO '$DEMYX_USERNAME'@'%' IDENTIFIED BY '$DEMYX_PASSWORD'; GRANT ALL privileges ON $DEMYX_DATABASE.* TO '$DEMYX_USERNAME'@'%';"
     else
-        /bin/echo "[demyx] DEMYX_DATABASE, DEMYX_USERNAME, and/or DEMYX_PASSWORD environment variables not set, continuing without a database..."
+        echo "[demyx] DEMYX_DATABASE, DEMYX_USERNAME, and/or DEMYX_PASSWORD environment variables not set, continuing without a database..."
     fi
 
     # Bring background job to the foreground
     fg %1
 else
-    /usr/bin/mysqld_safe
+    mysqld_safe
 fi

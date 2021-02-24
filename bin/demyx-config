@@ -35,7 +35,7 @@ set -euo pipefail
 DEMYX_LOG_FILE=mariadb.log
 [[ -n "$DEMYX_DOMAIN" ]] && DEMYX_LOG_FILE="$DEMYX_DOMAIN".mariadb.log
 
-/bin/echo "# Demyx
+echo "# Demyx
 # https://demyx.sh
 
 [client]
