@@ -6,8 +6,8 @@
 [![Forks](https://img.shields.io/github/forks/demyxsh/mariadb?style=flat&color=blue)](https://github.com/demyxsh/mariadb)
 [![Docker Pulls](https://img.shields.io/docker/pulls/demyx/mariadb?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
 [![Architecture](https://img.shields.io/badge/linux-amd64-important?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
-[![Alpine](https://img.shields.io/badge/dynamic/json?url=https://github.com/demyxsh/mariadb/raw/master/version.json&label=alpine&query=$.alpine&color=blue)](https://hub.docker.com/r/demyx/ssh)](https://hub.docker.com/r/demyx/mariadb)
-[![MariaDB](https://img.shields.io/badge/dynamic/json?url=https://github.com/demyxsh/mariadb/raw/master/version.json&label=mariadb&query=$.mariadb&color=blue)](https://hub.docker.com/r/demyx/ssh)](https://hub.docker.com/r/demyx/mariadb)
+[![Alpine](https://img.shields.io/badge/dynamic/json?url=https://github.com/demyxsh/mariadb/raw/master/version.json&label=alpine&query=$.alpine&color=blue)](https://hub.docker.com/r/demyx/ssh)
+[![MariaDB](https://img.shields.io/badge/dynamic/json?url=https://github.com/demyxsh/mariadb/raw/master/version.json&label=mariadb&query=$.mariadb&color=blue)](https://hub.docker.com/r/demyx/ssh)
 [![Buy Me A Coffee](https://img.shields.io/badge/buy_me_coffee-$5-informational?style=flat&color=blue)](https://www.buymeacoffee.com/VXqkQK5tb)
 [![Become a Patron!](https://img.shields.io/badge/become%20a%20patron-$5-informational?style=flat&color=blue)](https://www.patreon.com/bePatron?u=23406156)
 
