@@ -1,9 +1,13 @@
 # mariadb
-[![Build Status](https://img.shields.io/travis/demyxco/mariadb?style=flat)](https://travis-ci.org/demyxco/mariadb)
+[![demyxsh/mariadb](https://github.com/demyxsh/mariadb/actions/workflows/main.yml/badge.svg)](https://github.com/demyxsh/mariadb/actions/workflows/main.yml)[![Code Size](https://img.shields.io/github/languages/code-size/demyxsh/mariadb?style=flat&color=blue)](https://github.com/demyxsh/mariadb)
+[![Repository Size](https://img.shields.io/github/repo-size/demyxsh/mariadb?style=flat&color=blue)](https://github.com/demyxsh/mariadb)
+[![Watches](https://img.shields.io/github/watchers/demyxsh/mariadb?style=flat&color=blue)](https://github.com/demyxsh/mariadb)
+[![Stars](https://img.shields.io/github/stars/demyxsh/mariadb?style=flat&color=blue)](https://github.com/demyxsh/mariadb)
+[![Forks](https://img.shields.io/github/forks/demyxsh/mariadb?style=flat&color=blue)](https://github.com/demyxsh/mariadb)
 [![Docker Pulls](https://img.shields.io/docker/pulls/demyx/mariadb?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
 [![Architecture](https://img.shields.io/badge/linux-amd64-important?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
-[![Alpine](https://img.shields.io/badge/alpine-3.13.2-informational?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
-[![MariaDB](https://img.shields.io/badge/mariadb-10.5.8-informational?style=flat&color=blue)](https://hub.docker.com/r/demyx/mariadb)
+[![Alpine](https://img.shields.io/badge/dynamic/json?url=https://github.com/demyxsh/mariadb/raw/master/version.json&label=alpine&query=$.alpine&color=blue)](https://hub.docker.com/r/demyx/ssh)](https://hub.docker.com/r/demyx/mariadb)
+[![MariaDB](https://img.shields.io/badge/dynamic/json?url=https://github.com/demyxsh/mariadb/raw/master/version.json&label=mariadb&query=$.mariadb&color=blue)](https://hub.docker.com/r/demyx/ssh)](https://hub.docker.com/r/demyx/mariadb)
 [![Buy Me A Coffee](https://img.shields.io/badge/buy_me_coffee-$5-informational?style=flat&color=blue)](https://www.buymeacoffee.com/VXqkQK5tb)
 [![Become a Patron!](https://img.shields.io/badge/become%20a%20patron-$5-informational?style=flat&color=blue)](https://www.patreon.com/bePatron?u=23406156)
 
@@ -18,6 +22,12 @@ WORKDIR | /demyx
 CONFIG | /etc/demyx
 ENTRYPOINT | demyx-entrypoint
 TIMEZONE | America/Los_Angeles
+
+## NOTICE
+This repository has been moved to the organization [demyxsh](https://github.com/demyxsh); please update the remote URL.
+```
+git remote set-url origin git@github.com:demyxsh/mariadb.git
+```
 
 ## Usage
 ```
@@ -67,12 +77,6 @@ volumes:
 ```
 
 ## Updates & Support
-[![Code Size](https://img.shields.io/github/languages/code-size/demyxco/mariadb?style=flat&color=blue)](https://github.com/demyxco/mariadb)
-[![Repository Size](https://img.shields.io/github/repo-size/demyxco/mariadb?style=flat&color=blue)](https://github.com/demyxco/mariadb)
-[![Watches](https://img.shields.io/github/watchers/demyxco/mariadb?style=flat&color=blue)](https://github.com/demyxco/mariadb)
-[![Stars](https://img.shields.io/github/stars/demyxco/mariadb?style=flat&color=blue)](https://github.com/demyxco/mariadb)
-[![Forks](https://img.shields.io/github/forks/demyxco/mariadb?style=flat&color=blue)](https://github.com/demyxco/mariadb)
-
 * Auto built weekly on Saturdays (America/Los_Angeles)
 * Rolling release updates
-* For support: [#demyx](https://webchat.freenode.net/?channel=#demyx)
+* For support: [#demyx](https://web.libera.chat/?channel=#demyx)

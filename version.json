@@ -1,0 +1,4 @@
+{
+  "alpine": "init",
+  "mariadb": "init"
+}
