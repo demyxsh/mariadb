@@ -43,7 +43,7 @@ jobs:
             -e DEMYX_ROOT_PASSWORD=demyx \
             demyx/${{ env.DEMYX_REPOSITORY }}
 
-          docker run -d
+          docker run -d \
             --name=demyx_wp \
             --network=demyx \
             -v demyx_wp:/demyx \
