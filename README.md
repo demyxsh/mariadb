@@ -1,5 +1,6 @@
 # mariadb
-[![demyxsh/mariadb](https://github.com/demyxsh/mariadb/actions/workflows/main.yml/badge.svg)](https://github.com/demyxsh/mariadb/actions/workflows/main.yml)[![Code Size](https://img.shields.io/github/languages/code-size/demyxsh/mariadb?style=flat&color=blue)](https://github.com/demyxsh/mariadb)
+[![demyxsh/mariadb](https://github.com/demyxsh/mariadb/actions/workflows/main.yml/badge.svg)](https://github.com/demyxsh/mariadb/actions/workflows/main.yml)
+[![Code Size](https://img.shields.io/github/languages/code-size/demyxsh/mariadb?style=flat&color=blue)](https://github.com/demyxsh/mariadb)
 [![Repository Size](https://img.shields.io/github/repo-size/demyxsh/mariadb?style=flat&color=blue)](https://github.com/demyxsh/mariadb)
 [![Watches](https://img.shields.io/github/watchers/demyxsh/mariadb?style=flat&color=blue)](https://github.com/demyxsh/mariadb)
 [![Stars](https://img.shields.io/github/stars/demyxsh/mariadb?style=flat&color=blue)](https://github.com/demyxsh/mariadb)
