@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2022-05-18
+- Fix permission errors [d3df3e6](https://github.com/demyxsh/mariadb/commit/d3df3e6225c43f396c75d94695a3bf65c53a77c3)
+
 ## 2021-02-23
 - Added
     - `bin/demyx-admin`
