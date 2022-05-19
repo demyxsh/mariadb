@@ -76,7 +76,8 @@ RUN set -ex; \
     ln -sf "$DEMYX_CONFIG"/my.cnf /etc/my.cnf; \
     \
     # Set ownership
-    chown -R root:root /usr/local/bin
+    chown -R root:root /usr/local/bin; \
+    chown -R demyx:demyx /tmp
 
 WORKDIR "$DEMYX"
 
