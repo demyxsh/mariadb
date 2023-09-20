@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023-09-19
+- Fix build errors and set alpine version to 3.18 [3f33503](https://github.com/demyxsh/mariadb/commit/3f3350371f94ceece086cfd3ca8db09d7599c90f)
+
 ## 2022-05-18
 - Fix permission errors [d3df3e6](https://github.com/demyxsh/mariadb/commit/d3df3e6225c43f396c75d94695a3bf65c53a77c3)
 
