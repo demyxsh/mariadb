@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2024-02-07
+- Merge branch 'master' of github.com:demyxsh/mariadb [db80d4a](https://github.com/demyxsh/mariadb/commit/db80d4abedb2e99be12c7d763027edcd2518173a)
+- Update description with shameless plug and support link [daccef3](https://github.com/demyxsh/mariadb/commit/daccef3b4d6ccfa1c29cfef9a1d8b84be8d88f7f)
+- Use tail to output actual log file to stdout [8f59940](https://github.com/demyxsh/mariadb/commit/8f599403ff8c67d843fbb2a49af9fac69f191224)
+- Generate log file if it doesn't exist [7ee130f](https://github.com/demyxsh/mariadb/commit/7ee130fc2efb39dfb05db00e05840d06168b911c)
+
 ## 2023-09-19
 - Fix build errors and set alpine version to 3.18 [3f33503](https://github.com/demyxsh/mariadb/commit/3f3350371f94ceece086cfd3ca8db09d7599c90f)
 
