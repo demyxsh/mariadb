@@ -47,5 +47,6 @@ if [[ ! -d "$DEMYX"/"${DEMYX_DATABASE:=''}" ]]; then
     # Bring background job to the foreground
     fg %1
 else
-    mysqld_safe
+    mysqld_safe &
+    tail -f "$DEMYX_LOG"/"$DEMYX_DOMAIN".mariadb.log
 fi
