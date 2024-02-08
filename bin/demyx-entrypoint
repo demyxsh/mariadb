@@ -15,6 +15,9 @@ set -euo pipefail
 # Generate my.cnf if it doesn't exist
 [[ ! -f "$DEMYX_CONFIG"/my.cnf ]] && demyx-config
 
+# Generate log file if it doesn't exist
+[[ ! -f "$DEMYX_LOG"/"$DEMYX_DOMAIN".mariadb.log ]] && touch "$DEMYX_LOG"/"$DEMYX_DOMAIN".mariadb.log
+
 # Exit container if root password isn't set
 if [[ -z "${DEMYX_ROOT_PASSWORD:-}" ]]; then 
     echo "[demyx] DEMYX_ROOT_PASSWORD is not set! Exiting..."
