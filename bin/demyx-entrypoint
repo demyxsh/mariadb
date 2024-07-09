@@ -39,7 +39,7 @@ if [[ ! -d "$DEMYX"/"${DEMYX_DATABASE:=''}" ]]; then
 
     # Create custom database if these environment variables exists
     if [[ -n "${DEMYX_DATABASE:=}" && "${DEMYX_USERNAME:=}" && "${DEMYX_PASSWORD:=}" ]]; then
-        mysql -u root "-p${DEMYX_ROOT_PASSWORD}" -e "CREATE DATABASE $DEMYX_DATABASE; CREATE USER '$DEMYX_USERNAME' IDENTIFIED BY '$DEMYX_PASSWORD'; GRANT USAGE ON *.* TO '$DEMYX_USERNAME'@'%' IDENTIFIED BY '$DEMYX_PASSWORD'; GRANT ALL privileges ON $DEMYX_DATABASE.* TO '$DEMYX_USERNAME'@'%';"
+        mysql -u root "-p${DEMYX_ROOT_PASSWORD}" -e "CREATE DATABASE $DEMYX_DATABASE CHARACTER SET $DEMYX_CHARACTER_SET_SERVER COLLATE $DEMYX_COLLATION_SERVER; CREATE USER '$DEMYX_USERNAME' IDENTIFIED BY '$DEMYX_PASSWORD'; GRANT USAGE ON *.* TO '$DEMYX_USERNAME'@'%' IDENTIFIED BY '$DEMYX_PASSWORD'; GRANT ALL privileges ON $DEMYX_DATABASE.* TO '$DEMYX_USERNAME'@'%';"
     else
         echo "[demyx] DEMYX_DATABASE, DEMYX_USERNAME, and/or DEMYX_PASSWORD environment variables not set, continuing without a database..."
     fi
