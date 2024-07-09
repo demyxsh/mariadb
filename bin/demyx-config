@@ -60,6 +60,18 @@ bind-address                    = 0.0.0.0
 character-set-server            = $DEMYX_CHARACTER_SET_SERVER
 collation-server                = $DEMYX_COLLATION_SERVER
 datadir                         = $DEMYX
+query_cache_type                = $DEMYX_QUERY_CACHE_TYPE
+query_cache_limit               = $DEMYX_QUERY_CACHE_LIMIT
+query_cache_size                = $DEMYX_QUERY_CACHE_SIZE
+query_cache_min_res_unit        = $DEMYX_QUERY_CACHE_MIN_RES_UNIT
+performance_schema              = $DEMYX_PERFORMANCE_SCHEMA
+innodb_thread_concurrency       = $DEMYX_INNODB_THREAT_CONCURRENCY
+sql-mode                        = \"${DEMYX_SQL_MODE}\"
+innodb_io_capacity              = $DEMYX_INNODB_IO_CAPACITY
+innodb_io_capacity_max          = $DEMYX_INNODB_IO_CAPACITY_MAX
+innodb_checksum_algorithm       = $DEMYX_INNODB_CHECKSUM_ALGORITHM
+innodb_log_compressed_pages     = $DEMYX_INNODB_LOG_COMPRESSED_PAGES
+innodb_change_buffering         = $DEMYX_INNODB_CHANGE_BUFFERING
 innodb_buffer_pool_size         = $DEMYX_INNODB_BUFFER_POOL_SIZE
 innodb_data_file_path           = $DEMYX_INNODB_DATA_FILE_PATH
 innodb_data_home_dir            = $DEMYX
@@ -81,6 +93,7 @@ read_buffer_size                = $DEMYX_READ_BUFFER_SIZE
 read_rnd_buffer_size            = $DEMYX_READ_RND_BUFFER_SIZE
 server-id                       = $DEMYX_SERVER_ID
 skip-external-locking
+disable_log_bin
 sort_buffer_size                = $DEMYX_SORT_BUFFER_SIZE
 symbolic-links                  = 0
 table_open_cache                = $DEMYX_TABLE_OPEN_CACHE
