@@ -3,12 +3,6 @@
 # https://demyx.sh
 set -euom pipefail
 
-# Support for old variables
-[[ -n "${MARIADB_DATABASE:-}" ]] && DEMYX_DATABASE="$MARIADB_DATABASE"
-[[ -n "${MARIADB_PASSWORD:-}" ]] && DEMYX_PASSWORD="$MARIADB_PASSWORD"
-[[ -n "${MARIADB_ROOT_PASSWORD:-}" ]] && DEMYX_ROOT_PASSWORD="$MARIADB_ROOT_PASSWORD"
-[[ -n "${MARIADB_USERNAME:-}" ]] && DEMYX_USERNAME="$MARIADB_USERNAME"
-
 # Generate my.cnf
 demyx-config
 

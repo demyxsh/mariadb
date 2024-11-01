@@ -49,10 +49,6 @@ ENV DEMYX_TABLE_OPEN_CACHE                  64
 ENV DEMYX_USERNAME                          demyx
 ENV DEMYX_WRITE_BUFFER                      2M
 ENV TZ                                      America/Los_Angeles
-# Support for old variables
-ENV MARIADB_ROOT                            "$DEMYX"
-ENV MARIADB_CONFIG                          "$DEMYX_CONFIG"
-ENV MARIADB_LOG                             "$DEMYX_LOG"
 
 # Packages
 RUN set -ex; \
