@@ -1,7 +1,7 @@
 #!/bin/bash
 # Demyx
 # https://demyx.sh
-set -euo pipefail
+set -eEuo pipefail
 
 # Support for old variables
 [[ -n "${MARIADB_ROOT_PASSWORD:-}" ]] && DEMYX_ROOT_PASSWORD="$MARIADB_ROOT_PASSWORD"
