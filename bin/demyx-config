@@ -35,7 +35,10 @@ set -eEuo pipefail
 DEMYX_LOG_FILE=mariadb.log
 [[ -n "$DEMYX_DOMAIN" ]] && DEMYX_LOG_FILE="$DEMYX_DOMAIN".mariadb.log
 
-echo "# Demyx
+if [[ -f "${DEMYX_CONFIG}/custom/mariadb/my.cnf" ]]; then
+    ln -sf "${DEMYX_CONFIG}/custom/mariadb/my.cnf" "${DEMYX_CONFIG}/my.cnf"
+elif [[ ! -f "${DEMYX_CONFIG}/custom/mariadb/my.cnf" ]]; then
+    cat << EOF > "${DEMYX_CONFIG}/my.cnf"
 # https://demyx.sh
 
 [client]
@@ -103,4 +106,6 @@ quick
 quote-names
 
 [mysqlhotcopy]
-interactive-timeout" > "$DEMYX_CONFIG"/my.cnf
+interactive-timeout
+EOF
+fi
