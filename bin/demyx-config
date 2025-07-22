@@ -55,7 +55,9 @@ innodb_log_file_size            = $DEMYX_INNODB_LOG_FILE_SIZE
 innodb_log_group_home_dir       = $DEMYX
 innodb_use_native_aio           = $DEMYX_INNODB_USE_NATIVE_AIO
 key_buffer_size                 = $DEMYX_KEY_BUFFER_SIZE
-log-error                       = ${DEMYX_LOG}/${DEMYX_LOG_FILE}
+log_error                       = ${DEMYX_LOG}/${DEMYX_LOG_FILE}
+slow_query_log
+slow_query_log_file             = ${DEMYX_LOG}/${DEMYX_DOMAIN}.mariadb.slow.log
 max_allowed_packet              = $DEMYX_MAX_ALLOWED_PACKET
 max_connections                 = $DEMYX_MAX_CONNECTIONS
 myisam_sort_buffer_size         = $DEMYX_MYISAM_SORT_BUFFER_SIZE

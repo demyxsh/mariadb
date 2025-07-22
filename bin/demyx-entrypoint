@@ -42,5 +42,5 @@ if [[ ! -d "$DEMYX"/"${DEMYX_DATABASE:=''}" ]]; then
     fg %1
 else
     mysqld_safe &
-    tail -f "$DEMYX_LOG"/"$DEMYX_DOMAIN".mariadb.log
+    exec tail -f "$DEMYX_LOG"/"$DEMYX_DOMAIN".mariadb*.log
 fi
