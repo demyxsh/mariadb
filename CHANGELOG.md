@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 2025-07-28
+- Check error for subshells [b8429db](https://github.com/demyxsh/mariadb/commit/b8429dbcda968f92aa05022e15ed245745de0723)
+- Define character set and collate when creating a new db [b8e0ac6](https://github.com/demyxsh/mariadb/commit/b8e0ac6b8c499a70a3a59be20813b64d9a8e799b)
+- Update ENV and my.cnf [74760e7](https://github.com/demyxsh/mariadb/commit/74760e7bea250e33805bb7cc12bbfa14a5cc354c)
+- Remove deprecated values [b9b5495](https://github.com/demyxsh/mariadb/commit/b9b5495e72ce91b40e6f86b18c69b289d6021ee6)
+- Check errors in subshells too [f86f058](https://github.com/demyxsh/mariadb/commit/f86f058fc9689eeac8fa4d61e4246b6999a19378)
+- Allow users to override my.cnf [14ff401](https://github.com/demyxsh/mariadb/commit/14ff4011700d345fe306b212a2a9dcbe3b9a04c4)
+- Remove escapes [bc9dc07](https://github.com/demyxsh/mariadb/commit/bc9dc073c1b57d817a968794849bed2ac653be66)
+- Direct people to demyx [87b6a51](https://github.com/demyxsh/mariadb/commit/87b6a51afa8de5d9a2a157773875dc6dbc7764bb)
+- Remove old variables [567bd32](https://github.com/demyxsh/mariadb/commit/567bd32c27dba0ff5f22ad459ff807753d6ce33e)
+- Add slow query logging to demyx-config and update log file handling in demyx-entrypoint [4900df0](https://github.com/demyxsh/mariadb/commit/4900df0cd60cfea5d1fd95c196f508f994552e89)
+- Update GitHub Actions workflow to use run ID in commit message for scheduled builds [c174ea5](https://github.com/demyxsh/mariadb/commit/c174ea5d69bf368ca3d7df91504760cdcf13dffb)
+
 ## 2024-02-07
 - Merge branch 'master' of github.com:demyxsh/mariadb [db80d4a](https://github.com/demyxsh/mariadb/commit/db80d4abedb2e99be12c7d763027edcd2518173a)
 - Update description with shameless plug and support link [daccef3](https://github.com/demyxsh/mariadb/commit/daccef3b4d6ccfa1c29cfef9a1d8b84be8d88f7f)
