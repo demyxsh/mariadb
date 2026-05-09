@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2026-05-09
+- Set base image to Alpine 3.22
+
 ## 2025-07-28
 - Check error for subshells [b8429db](https://github.com/demyxsh/mariadb/commit/b8429dbcda968f92aa05022e15ed245745de0723)
 - Define character set and collate when creating a new db [b8e0ac6](https://github.com/demyxsh/mariadb/commit/b8e0ac6b8c499a70a3a59be20813b64d9a8e799b)

@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3.22
 
 LABEL sh.demyx.image                        demyx/mariadb
 LABEL sh.demyx.maintainer                   Demyx <info@demyx.sh>
