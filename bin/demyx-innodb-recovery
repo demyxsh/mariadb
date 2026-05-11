@@ -1,0 +1,172 @@
+#!/bin/bash
+# Demyx
+# https://demyx.sh
+set -eEuo pipefail
+
+# Safe helper for InnoDB crash-recovery bootstrapping.
+# This script does NOT delete data. It creates backups + recovery overrides.
+
+DEMYX="${DEMYX:-/demyx}"
+DEMYX_CONFIG="${DEMYX_CONFIG:-/etc/demyx}"
+DEMYX_LOG="${DEMYX_LOG:-/var/log/demyx}"
+DEMYX_RECOVERY_DIR="${DEMYX_CONFIG}/recovery"
+DEMYX_RECOVERY_CNF="${DEMYX_RECOVERY_DIR}/99-innodb-force-recovery.cnf"
+DEMYX_RECOVERY_LEVEL="${DEMYX_INNODB_FORCE_RECOVERY_LEVEL:-1}"
+DEMYX_STAMP="$(date +%Y%m%d-%H%M%S)"
+DEMYX_BACKUP_TGZ="${DEMYX}/.demyx-innodb-backup-${DEMYX_STAMP}.tgz"
+
+usage() {
+    cat <<USAGE
+Usage:
+  demyx-innodb-recovery
+  demyx-innodb-recovery setup [level]
+  demyx-innodb-recovery clear
+  demyx-innodb-recovery status
+
+Commands:
+  (no args)      Same as: setup 1
+  setup [level]  Create datadir backup + write innodb_force_recovery config.
+                 level defaults to 1. Valid: 1-6.
+  clear          Remove recovery override config.
+  status         Show current recovery override + next-step guidance.
+
+Env overrides:
+  DEMYX=/demyx
+  DEMYX_CONFIG=/etc/demyx
+  DEMYX_INNODB_FORCE_RECOVERY_LEVEL=1
+USAGE
+}
+
+validate_level() {
+    local level="$1"
+    if ! [[ "$level" =~ ^[1-6]$ ]]; then
+        echo "[demyx] Invalid recovery level: ${level} (must be 1-6)" >&2
+        exit 1
+    fi
+}
+
+backup_datadir() {
+    echo "[demyx] Creating datadir backup: ${DEMYX_BACKUP_TGZ}"
+    tar -czf "${DEMYX_BACKUP_TGZ}" -C "${DEMYX}" .
+    echo "[demyx] Backup complete"
+}
+
+write_recovery_cnf() {
+    local level="$1"
+    mkdir -p "${DEMYX_RECOVERY_DIR}"
+
+    cat > "${DEMYX_RECOVERY_CNF}" <<CNF
+# Demyx InnoDB emergency recovery override
+# Remove this file after dump+restore is complete.
+[mysqld]
+innodb_force_recovery = ${level}
+CNF
+
+    if [[ -f "${DEMYX_CONFIG}/my.cnf" ]]; then
+        if ! grep -q "99-innodb-force-recovery.cnf" "${DEMYX_CONFIG}/my.cnf"; then
+            cat >> "${DEMYX_CONFIG}/my.cnf" <<'INCLUDE'
+
+!include /etc/demyx/recovery/99-innodb-force-recovery.cnf
+INCLUDE
+            echo "[demyx] Added recovery include to ${DEMYX_CONFIG}/my.cnf"
+        fi
+    fi
+
+    echo "[demyx] Wrote ${DEMYX_RECOVERY_CNF}"
+}
+
+clear_recovery() {
+    rm -f "${DEMYX_RECOVERY_CNF}"
+
+    if [[ -f "${DEMYX_CONFIG}/my.cnf" ]]; then
+        sed -i '\|^!include /etc/demyx/recovery/99-innodb-force-recovery.cnf$|d' "${DEMYX_CONFIG}/my.cnf"
+    fi
+
+    echo "[demyx] Cleared recovery override"
+}
+
+post_rebuild_prompt() {
+    local yn=
+
+    if [[ ! -t 0 ]]; then
+        echo "[demyx] Non-interactive shell detected; skipping post-rebuild prompts."
+        return 0
+    fi
+
+    read -r -p "[demyx] DB rebuild done. Run import workflow now? [y/N]: " yn
+    if [[ ! "$yn" =~ ^[Yy]$ ]]; then
+        echo "[demyx] Skipped import workflow."
+        return 0
+    fi
+
+    if [[ ! -f /demyx/all-databases.sql ]]; then
+        echo "[demyx] /demyx/all-databases.sql not found. Place dump file first, then re-run." >&2
+        return 1
+    fi
+
+    echo "[demyx] Found dump file: /demyx/all-databases.sql"
+    read -r -p "[demyx] Import now? [y/N]: " yn
+    if [[ "$yn" =~ ^[Yy]$ ]]; then
+        mariadb -h 127.0.0.1 -P 3306 -u root -p"${DEMYX_ROOT_PASSWORD}" < /demyx/all-databases.sql
+        echo "[demyx] Import complete."
+    else
+        echo "[demyx] Import skipped."
+        return 0
+    fi
+
+    read -r -p "[demyx] Clear innodb_force_recovery now? [y/N]: " yn
+    if [[ "$yn" =~ ^[Yy]$ ]]; then
+        clear_recovery
+    else
+        echo "[demyx] Recovery override left active."
+    fi
+}
+
+status_recovery() {
+    if [[ -f "${DEMYX_RECOVERY_CNF}" ]]; then
+        echo "[demyx] Recovery override is ACTIVE"
+        cat "${DEMYX_RECOVERY_CNF}"
+    else
+        echo "[demyx] Recovery override is NOT active"
+    fi
+
+    cat <<'NEXT'
+
+[demyx] Recommended next steps:
+1. Restart container and confirm MariaDB boots.
+2. Dump all databases ASAP:
+   mariadb-dump -u root -p"$DEMYX_ROOT_PASSWORD" --all-databases --routines --events --triggers > /demyx/all-databases.sql
+3. Rebuild with a fresh datadir and import dump.
+4. Run: demyx-innodb-recovery clear
+NEXT
+
+    post_rebuild_prompt
+}
+
+main() {
+    local cmd="${1:-setup}"
+    case "$cmd" in
+        setup)
+            local level="${2:-$DEMYX_RECOVERY_LEVEL}"
+            validate_level "$level"
+            backup_datadir
+            write_recovery_cnf "$level"
+            status_recovery
+        ;;
+        clear)
+            clear_recovery
+        ;;
+        status)
+            status_recovery
+        ;;
+        -h|--help|help)
+            usage
+        ;;
+        *)
+            usage
+            exit 1
+        ;;
+    esac
+}
+
+main "$@"
