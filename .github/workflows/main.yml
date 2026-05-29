@@ -23,8 +23,10 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Build
         run: |
-          docker pull demyx/nginx:${{ env.DEMYX_VERSION }}
-          docker pull demyx/wordpress:${{ env.DEMYX_VERSION }}
+          DEMYX_VERSION="$(curl -fsSL https://raw.githubusercontent.com/demyxsh/demyx/refs/heads/master/VERSION | awk -F= '$1 == "DEMYX_VERSION" { print $2 }')"
+          test -n "$DEMYX_VERSION"
+          docker pull demyx/nginx:${DEMYX_VERSION}
+          docker pull demyx/wordpress:${DEMYX_VERSION}
           docker build -t demyx/${{ env.DEMYX_REPOSITORY }} -t demyx/${{ env.DEMYX_REPOSITORY }}:${{ env.DEMYX_VERSION }} -t demyx/${{ env.DEMYX_REPOSITORY }}:v1 .
       - name: Test
         id: test
